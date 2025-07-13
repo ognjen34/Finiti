@@ -1,4 +1,5 @@
-﻿using Finiti.DOMAIN.Model;
+﻿using Finiti.DATA.Model;
+using Finiti.DOMAIN.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ namespace Finiti.DATA
     
         public class DatabaseContext : DbContext
         {
-            public DbSet<Author> Authors { get; set; }
+            public DbSet<AuthorEntity> Authors { get; set; }
+            public DbSet<RoleEntity> Roles { get; set; }
 
 
         public DatabaseContext(DbContextOptions options) : base(options)
