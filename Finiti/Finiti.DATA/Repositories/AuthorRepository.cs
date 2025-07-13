@@ -35,6 +35,7 @@ namespace Finiti.DATA.Repositories
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(authorEntity.Password);
             authorEntity.Password = passwordHash;
             authorEntity.RoleId = 0;
+            authorEntity.Role = null;
 
             _authors.Add(authorEntity);
             _context.SaveChanges();

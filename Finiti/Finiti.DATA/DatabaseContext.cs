@@ -15,6 +15,10 @@ namespace Finiti.DATA
         {
             public DbSet<AuthorEntity> Authors { get; set; }
             public DbSet<RoleEntity> Roles { get; set; }
+            public DbSet<ForbiddenWordEntity> ForbiddenWords { get; set; }
+            public DbSet<GlossaryTermEntity> GlossaryTerms { get; set; }
+
+        
 
 
         public DatabaseContext(DbContextOptions options) : base(options)

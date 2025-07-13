@@ -2,6 +2,7 @@
 using Finiti.DATA.Model;
 using Finiti.DATA.Repositories;
 using Finiti.DOMAIN.Model;
+using Finiti.WEB.DTO.Requests;
 using Finiti.WEB.DTO.Responses;
 
 namespace Finiti.WEB
@@ -15,6 +16,7 @@ namespace Finiti.WEB
             CreateMap<Author, AuthorEntity>().ReverseMap();
             CreateMap<RoleEntity, Role>().ReverseMap();
             CreateMap<Author, AuthorResponse>().ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.Name));
+            CreateMap<CreateAuthorRequest, Author>().ForMember(dest => dest.Role, opt => opt.MapFrom(src => new Role { Id = 0 }));
 
         }
     }

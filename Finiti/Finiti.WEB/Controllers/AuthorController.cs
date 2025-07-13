@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Finiti.DOMAIN.Model;
 using Finiti.DOMAIN.Services;
 using Finiti.WEB.DTO.Requests;
 using Finiti.WEB.DTO.Responses;
@@ -87,6 +88,13 @@ namespace Finiti.WEB.Controllers
             {
                 return Ok(LoggedAuthor);
             }
+        }
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] CreateAuthorRequest request)
+        {
+            Author author = _mapper.Map<Author>(request);
+            var registeredAuthor = await _authService.Register(author);
+            return Ok(_mapper.Map<AuthorResponse>(registeredAuthor));
         }
 
     }
