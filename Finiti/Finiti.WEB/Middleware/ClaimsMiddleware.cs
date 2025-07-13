@@ -18,14 +18,11 @@ namespace Finiti.WEB.Middleware
             {
                 try
                 {
-                    //LoggedUser loggedUser = new LoggedUser();
-                    //loggedUser.UserId = new Guid(identity.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-                    //loggedUser.Name = identity.FindFirst(ClaimTypes.Name)?.Value;
-                    //loggedUser.Email = identity.FindFirst(ClaimTypes.Email)?.Value;
-                    //loggedUser.Role = Enum.Parse<Role>(identity.FindFirst(ClaimTypes.Role)?.Value);
-                    //context.Items["loggedUser"] = loggedUser;
-
-
+                    LoggedAuthor loggedAuthor = new LoggedAuthor();
+                    loggedAuthor.Id = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                    loggedAuthor.Username = identity.FindFirst(ClaimTypes.Name)?.Value;
+                    loggedAuthor.Role  = identity.FindFirst(ClaimTypes.Role)?.Value;
+                    context.Items["LoggedAuthor"] = loggedAuthor;
                 }
                 catch
                 {
