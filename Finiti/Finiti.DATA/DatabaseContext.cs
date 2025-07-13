@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Finiti.DOMAIN.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace Finiti.DATA
     
         public class DatabaseContext : DbContext
         {
-            
+            public DbSet<Author> Authors { get; set; }
 
-            public DatabaseContext(DbContextOptions options) : base(options)
+
+        public DatabaseContext(DbContextOptions options) : base(options)
             {
+
             }
 
             protected override void OnModelCreating(ModelBuilder modelBuilder)
