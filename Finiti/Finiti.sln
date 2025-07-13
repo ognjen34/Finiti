@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finiti.WEB", "Finiti.WEB\Finiti.WEB.csproj", "{3407E889-F604-4B3A-BDD8-EACF2EDF5EEB}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finiti.DOMAIN", "Finiti.DOMAIN\Finiti.DOMAIN.csproj", "{19FCDF8A-8D3B-4C0A-B525-F0EA1A5EDC42}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finiti.APPLICATION", "Finiti.APPLICATION\Finiti.APPLICATION.csproj", "{05BAA304-142E-415A-B0ED-F4C158D9E058}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finiti.RepositoryTests", "Finiti.RepositoryTests\Finiti.RepositoryTests.csproj", "{AC7C5E00-06CE-4C54-B0FD-64DEDA912D7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{05BAA304-142E-415A-B0ED-F4C158D9E058}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05BAA304-142E-415A-B0ED-F4C158D9E058}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05BAA304-142E-415A-B0ED-F4C158D9E058}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC7C5E00-06CE-4C54-B0FD-64DEDA912D7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC7C5E00-06CE-4C54-B0FD-64DEDA912D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC7C5E00-06CE-4C54-B0FD-64DEDA912D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC7C5E00-06CE-4C54-B0FD-64DEDA912D7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
