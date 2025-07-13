@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finiti.APPLICATION", "Finit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finiti.RepositoryTests", "Finiti.RepositoryTests\Finiti.RepositoryTests.csproj", "{AC7C5E00-06CE-4C54-B0FD-64DEDA912D7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finiti.ServiceTests", "Finiti.ServiceTests\Finiti.ServiceTests.csproj", "{F11E7EB6-5F39-47FA-A0A9-112E2541AF82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{AC7C5E00-06CE-4C54-B0FD-64DEDA912D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC7C5E00-06CE-4C54-B0FD-64DEDA912D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC7C5E00-06CE-4C54-B0FD-64DEDA912D7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F11E7EB6-5F39-47FA-A0A9-112E2541AF82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F11E7EB6-5F39-47FA-A0A9-112E2541AF82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F11E7EB6-5F39-47FA-A0A9-112E2541AF82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F11E7EB6-5F39-47FA-A0A9-112E2541AF82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

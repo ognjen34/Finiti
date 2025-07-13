@@ -9,7 +9,15 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="MSTest" Version="3.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Finiti.APPLICATION\Finiti.APPLICATION.csproj" />
+    <ProjectReference Include="..\Finiti.DATA\Finiti.DATA.csproj" />
+    <ProjectReference Include="..\Finiti.DOMAIN\Finiti.DOMAIN.csproj" />
+    <ProjectReference Include="..\Finiti.WEB\Finiti.WEB.csproj" />
   </ItemGroup>
 
   <ItemGroup>
