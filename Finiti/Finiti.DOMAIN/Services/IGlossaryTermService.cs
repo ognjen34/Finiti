@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Finiti.DOMAIN.Repositories
+namespace Finiti.DOMAIN.Services
 {
-    public interface IGlossaryTermRepository
+    public interface IGlossaryTermService
     {
         Task<GlossaryTerm> GetById(int id);
         Task<GlossaryTerm> GetByName(string name);

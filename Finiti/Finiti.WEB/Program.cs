@@ -24,6 +24,10 @@ builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddScoped<IAuthorRepository,AuthorRepository>();
 builder.Services.AddScoped<IAuthService,AuthService>();
+builder.Services.AddScoped<IGlossaryTermRepository,GlossaryTermRepository>();
+builder.Services.AddScoped<IGlossaryTermService,GlossaryTermService>();
+builder.Services.AddScoped<ITermValidationService,TermValidationService>();
+builder.Services.AddScoped<IForbiddenWordRepository,ForbiddenWordRepository>();
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
