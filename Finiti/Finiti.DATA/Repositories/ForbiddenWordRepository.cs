@@ -41,12 +41,12 @@ namespace Finiti.DATA.Repositories
 
         }
 
-        public Task<bool> Delete(int id)
+        public Task<bool> DeleteByWord(string word)
         {
-            ForbiddenWordEntity forbiddenWordEntity = _forbiddenWords.FirstOrDefault(fw => fw.Id == id);
+            ForbiddenWordEntity forbiddenWordEntity = _forbiddenWords.FirstOrDefault(fw => fw.Word == word);
             if (forbiddenWordEntity == null)
             {
-                throw new ResourceNotFoundException("Forbidden word not found with the provided ID.");
+                throw new ResourceNotFoundException("Forbidden word not found with the provided word.");
             }
             _forbiddenWords.Remove(forbiddenWordEntity);
             _context.SaveChanges();
@@ -59,6 +59,17 @@ namespace Finiti.DATA.Repositories
             List<ForbiddenWordEntity> forbiddenWordEntities = _forbiddenWords.ToList();
             return Task.FromResult(_mapper.Map<List<ForbiddenWord>>(forbiddenWordEntities));
             
+
+        }
+
+        public Task<ForbiddenWord> GetById(int id)
+        {
+            ForbiddenWordEntity forbiddenWordEntity = _forbiddenWords.FirstOrDefault(fw => fw.Id == id);
+            if (forbiddenWordEntity == null)
+            {
+                throw new ResourceNotFoundException("Forbidden word not found with the provided ID.");
+            }
+            return Task.FromResult(_mapper.Map<ForbiddenWord>(forbiddenWordEntity));
 
         }
     }

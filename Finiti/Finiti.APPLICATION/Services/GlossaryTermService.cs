@@ -37,6 +37,19 @@ namespace Finiti.APPLICATION.Services
             return Task.FromResult(archivedTerm);
         }
 
+        public Task<GlossaryTerm> Delete(int glossaryTermId)
+        {
+            GlossaryTerm glossaryTerm = _glossaryTermRepository.GetById(glossaryTermId).Result;
+            if (glossaryTerm.Status != GlossaryTermStatus.DRAFT)
+            {
+                throw new TermNotInDraftException("Glossary term must be in draft before it can be deleted.");
+            }
+            GlossaryTerm deletedTerm = _glossaryTermRepository.Delete(glossaryTermId).Result;
+            return Task.FromResult(deletedTerm);
+
+
+        }
+
         public Task<GlossaryTerm> GetById(int id)
         {
 

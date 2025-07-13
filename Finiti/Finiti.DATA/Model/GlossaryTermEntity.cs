@@ -16,5 +16,6 @@ namespace Finiti.DATA.Model
         public int AuthorId { get; set; }
         public virtual AuthorEntity Author { get; set; }
         public GlossaryTermStatus Status { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

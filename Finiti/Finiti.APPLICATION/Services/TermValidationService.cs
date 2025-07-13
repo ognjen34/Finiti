@@ -47,7 +47,8 @@ namespace Finiti.APPLICATION.Services
             {
                 if (term.Definition.Contains(forbiddenWord.Word, StringComparison.OrdinalIgnoreCase))
                 {
-                    return true;
+                    throw new TermValidationException("Term contains forbidden words. " + forbiddenWord.Word);
+
                 }
             }
             return false;

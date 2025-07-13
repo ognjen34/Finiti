@@ -14,6 +14,8 @@ namespace Finiti.DOMAIN.Model
         public DateTime CreatedAt { get; set; }
         public GlossaryTermStatus Status { get; set; }
         public Author Author { get; set; }
+        public bool IsDeleted { get; set; }
+
 
     }
 

@@ -15,5 +15,6 @@ namespace Finiti.DOMAIN.Services
         Task<PaginationReturnObject<GlossaryTerm>> Search(PaginationFilter page);
         Task<GlossaryTerm> Publish(int glossaryTermId);
         Task<GlossaryTerm> Archive(int glossaryTermId);
+        Task<GlossaryTerm> Delete(int glossaryTermId);
     }
 }

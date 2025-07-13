@@ -5,12 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Finiti.DOMAIN.Repositories
+namespace Finiti.DOMAIN.Services
 {
-    public interface IForbiddenWordRepository
+    public interface IForbiddenWordService
     {
-        public Task<List<ForbiddenWord>> GetAll();
-        public Task<ForbiddenWord> GetById(int id);
         public Task<ForbiddenWord> Add(ForbiddenWord forbiddenWord);
         public Task<bool> DeleteByWord(string word);
     }

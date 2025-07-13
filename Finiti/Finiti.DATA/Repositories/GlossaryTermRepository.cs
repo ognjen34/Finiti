@@ -25,7 +25,7 @@ namespace Finiti.DATA.Repositories
         }
         public Task<GlossaryTerm> Add(GlossaryTerm glossaryTerm)
         {
-            GlossaryTermEntity existingTerm = _glossaryTerms.FirstOrDefault(gt => gt.Term == glossaryTerm.Term);
+            GlossaryTermEntity existingTerm = _glossaryTerms.FirstOrDefault(gt => gt.Term == glossaryTerm.Term && gt.IsDeleted == false);
             if (existingTerm != null)
             {
                 throw new TermAlreadyExistsException("Glossary term with this name already exists.");
@@ -42,7 +42,7 @@ namespace Finiti.DATA.Repositories
 
         public Task<GlossaryTerm> Archive(int glossaryTermId)
         {
-            GlossaryTermEntity glossaryTermEntity = _glossaryTerms.FirstOrDefault(gt => gt.Id == glossaryTermId);
+            GlossaryTermEntity glossaryTermEntity = _glossaryTerms.FirstOrDefault(gt => gt.Id == glossaryTermId && gt.IsDeleted == false);
             if (glossaryTermEntity == null)
             {
                 throw new ResourceNotFoundException("Glossary term not found with the provided ID.");
@@ -53,10 +53,23 @@ namespace Finiti.DATA.Repositories
 
         }
 
+        public Task<GlossaryTerm> Delete(int glossaryTermId)
+        {
+            GlossaryTermEntity glossaryTermEntity = _glossaryTerms.FirstOrDefault(gt => gt.Id == glossaryTermId && gt.IsDeleted == false);
+            if (glossaryTermEntity == null)
+            {
+                throw new ResourceNotFoundException("Glossary term not found with the provided ID.");
+            }
+            glossaryTermEntity.IsDeleted = true;
+            _context.SaveChanges();
+            return Task.FromResult(_mapper.Map<GlossaryTerm>(glossaryTermEntity));
+
+        }
+
         public Task<GlossaryTerm> GetById(int id)
         {
 
-            GlossaryTermEntity glossaryTermEntity = _glossaryTerms.FirstOrDefault(gt => gt.Id == id);
+            GlossaryTermEntity glossaryTermEntity = _glossaryTerms.FirstOrDefault(gt => gt.Id == id && gt.IsDeleted == false);
             if (glossaryTermEntity == null)
             {
                 throw new ResourceNotFoundException("Glossary term not found with the provided ID.");
@@ -66,7 +79,7 @@ namespace Finiti.DATA.Repositories
 
         public Task<GlossaryTerm> GetByName(string name)
         {
-            GlossaryTermEntity glossaryTermEntity = _glossaryTerms.FirstOrDefault(gt => gt.Term == name);
+            GlossaryTermEntity glossaryTermEntity = _glossaryTerms.FirstOrDefault(gt => gt.Term == name && gt.IsDeleted == false);
             if (glossaryTermEntity == null)
             {
                 throw new ResourceNotFoundException("Glossary term not found with the provided term.");
@@ -76,7 +89,7 @@ namespace Finiti.DATA.Repositories
 
         public Task<GlossaryTerm> Publish(int glossaryTermId)
         {
-            GlossaryTermEntity glossaryTermEntity = _glossaryTerms.FirstOrDefault(gt => gt.Id == glossaryTermId);
+            GlossaryTermEntity glossaryTermEntity = _glossaryTerms.FirstOrDefault(gt => gt.Id == glossaryTermId && gt.IsDeleted == false);
             if (glossaryTermEntity == null)
             {
                 throw new ResourceNotFoundException("Glossary term not found with the provided ID.");
@@ -94,6 +107,8 @@ namespace Finiti.DATA.Repositories
         public Task<PaginationReturnObject<GlossaryTerm>> Search(PaginationFilter page)
         {
             IQueryable<GlossaryTermEntity> query = _glossaryTerms;
+
+            query = query.Where(gt => gt.IsDeleted == false);
 
             if (!string.IsNullOrEmpty(page.TermQuery))
             {

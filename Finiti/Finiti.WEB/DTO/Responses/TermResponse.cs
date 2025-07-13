@@ -6,6 +6,6 @@
         public string Term { get; set; }
         public string Definition { get; set; }
         public DateTime CreatedAt { get; set; }
-        public int AuthorId { get; set; }
+        public AuthorResponse Author { get; set; }
     }
 }

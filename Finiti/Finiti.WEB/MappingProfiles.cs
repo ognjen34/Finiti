@@ -20,7 +20,8 @@ namespace Finiti.WEB
             CreateMap<Author, AuthorResponse>().ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.Name));
             CreateMap<CreateAuthorRequest, Author>().ForMember(dest => dest.Role, opt => opt.MapFrom(src => new Role { Id = 0 }));
             CreateMap<CreateTermRequest, GlossaryTerm>();
-            CreateMap<GlossaryTerm, TermResponse>().ForMember(dest => dest.AuthorId, opt => opt.MapFrom(src => src.Author.Id));
+            CreateMap<GlossaryTerm, TermResponse>().ReverseMap();
+            CreateMap<ForbiddenWordRequest, ForbiddenWord>();
 
         }
     }

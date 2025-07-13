@@ -28,6 +28,8 @@ builder.Services.AddScoped<IGlossaryTermRepository,GlossaryTermRepository>();
 builder.Services.AddScoped<IGlossaryTermService,GlossaryTermService>();
 builder.Services.AddScoped<ITermValidationService,TermValidationService>();
 builder.Services.AddScoped<IForbiddenWordRepository,ForbiddenWordRepository>();
+builder.Services.AddScoped<IForbiddenWordService,ForbiddenWordService>();
+
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
