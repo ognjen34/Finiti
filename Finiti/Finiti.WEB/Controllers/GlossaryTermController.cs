@@ -50,13 +50,13 @@ namespace Finiti.WEB.Controllers
 
             return Ok(mappedResponse);
         }
-        [HttpGet("publish/{id}")]
+        [HttpPut("publish/{id}")]
         public async Task<IActionResult> PublishTerm(int id)
         {
             GlossaryTerm publishedTerm = await _glossaryTermService.Publish(id);
             return Ok(_mapper.Map<TermResponse>(publishedTerm));
         }
-        [HttpGet("archive/{id}")]
+        [HttpPut("archive/{id}")]
         public async Task<IActionResult> ArchiveTerm(int id)
         {
             GlossaryTerm archivedTerm = await _glossaryTermService.Archive(id);

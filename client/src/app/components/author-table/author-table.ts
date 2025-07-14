@@ -9,13 +9,29 @@ import { MatButtonModule } from '@angular/material/button';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { GlossaryTermService } from '../../services/glossary-term-service';
-import { TermResponse, PaginationReturnObject, PaginationFilter } from '../../services/glossary-term-model';
-
+import { MatDialog } from '@angular/material/dialog';
+import { AddTermDialog } from '../add-term-dialog/add-term-dialog';
+import {
+  TermResponse,
+  PaginationReturnObject,
+  PaginationFilter,
+  CreateTermRequest,
+} from '../../services/models/glossary-term-model';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-author-table',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSnackBarModule,
+  ],
   templateUrl: './author-table.html',
   styleUrls: ['./author-table.css'],
 })
@@ -33,12 +49,14 @@ export class AuthorTable implements OnInit {
 
   private filterChange$ = new Subject<void>();
 
-  constructor(private glossaryTermService: GlossaryTermService) {}
+  constructor(
+    private glossaryTermService: GlossaryTermService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
-    this.filterChange$.pipe(
-      debounceTime(1000)
-    ).subscribe(() => {
+    this.filterChange$.pipe(debounceTime(1000)).subscribe(() => {
       this.pageIndex = 0;
       this.loadData();
     });
@@ -46,27 +64,90 @@ export class AuthorTable implements OnInit {
     this.loadData();
   }
   onAddTerm() {
-    console.log('Add term button clicked');
+    const dialogRef = this.dialog.open(AddTermDialog, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        let request: CreateTermRequest = {
+          term: result.term,
+          definition: result.definition,
+        };
+        this.glossaryTermService
+          .createTerm(request)
+          .subscribe({
+            next: () => {
+              this.snackBar.open('Term added successfully', 'Close', {
+                duration: 3000,
+              });
+              this.loadData();
+            },
+            error: (err) => {
+              console.error('Error adding term', err);
+              this.snackBar.open(
+                'Error adding term: ' + (err.error?.error || err.message),
+                'Close',
+                { duration: 5000 }
+              );
+            },
+          });
+      }
+    });
   }
+
   onArchive(element: TermResponse) {
-    console.log('Archive clicked for:', element);
-    // Call service to archive term, then reload data or update UI
+    this.glossaryTermService.archive(element.id.toString()).subscribe({
+      next: () => {
+        console.log('Term archived:', element.id);
+        this.snackBar.open('Term archived successfully', 'Close', {
+          duration: 3000,
+        });
+
+        this.loadData(); // Reload data after archiving
+      },
+      error: (err) => {
+        console.error('Error archiving term', err);
+        this.snackBar.open(err.error.error, 'Close', { duration: 3000 });
+      },
+    });
   }
-  
+
   onPublish(element: TermResponse) {
-    console.log('Publish clicked for:', element);
-    // Call service to publish term, then reload data or update UI
+    this.glossaryTermService.publish(element.id.toString()).subscribe({
+      next: () => {
+        console.log('Term published:', element.id);
+        this.snackBar.open('Term published successfully', 'Close', {
+          duration: 3000,
+        });
+
+        this.loadData();
+      },
+      error: (err) => {
+        this.snackBar.open(err.error.error, 'Close', { duration: 3000 });
+      },
+    });
   }
-  
+
   onDelete(element: TermResponse) {
-    console.log('Delete clicked for:', element);
-    // Call service to delete term, then reload data or update UI
+    this.glossaryTermService.delete(element.id.toString()).subscribe({
+      next: () => {
+        console.log('Term deleted:', element.id);
+        this.snackBar.open('Term deleted successfully', 'Close', {
+          duration: 3000,
+        });
+        this.loadData();
+      },
+      error: (err) => {
+        console.error('Error deleting term', err);
+        this.snackBar.open(err.error.error, 'Close', { duration: 3000 });
+      },
+    });
   }
-  
 
   loadData() {
     const filter: PaginationFilter = {
-      pageNumber: this.pageIndex + 1,  
+      pageNumber: this.pageIndex + 1,
       pageSize: this.pageSize,
       termQuery: this.termQuery,
       authorQuery: this.authorQuery,
@@ -79,7 +160,7 @@ export class AuthorTable implements OnInit {
       },
       error: (err) => {
         console.error('Error loading glossary terms', err);
-      }
+      },
     });
   }
 

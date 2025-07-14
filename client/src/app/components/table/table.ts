@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { GlossaryTermService } from '../../services/glossary-term-service';
-import { TermResponse, PaginationReturnObject, PaginationFilter } from '../../services/glossary-term-model';
+import { TermResponse, PaginationReturnObject, PaginationFilter } from '../../services/models/glossary-term-model';
 
 
 @Component({

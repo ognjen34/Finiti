@@ -29,4 +29,9 @@ export interface PaginationFilter {
     author: AuthorResponse;
     status: string; 
   }
+
+  export interface CreateTermRequest {
+    term: string;
+    definition: string;
+  }
   
