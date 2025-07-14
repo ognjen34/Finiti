@@ -2,6 +2,7 @@
 using Finiti.DATA.Model;
 using Finiti.DATA.Repositories;
 using Finiti.DOMAIN.Model;
+using Finiti.WEB.DTO;
 using Finiti.WEB.DTO.Requests;
 using Finiti.WEB.DTO.Responses;
 
@@ -22,6 +23,7 @@ namespace Finiti.WEB
             CreateMap<CreateTermRequest, GlossaryTerm>();
             CreateMap<GlossaryTerm, TermResponse>().ReverseMap();
             CreateMap<ForbiddenWordRequest, ForbiddenWord>();
+            CreateMap<UpdateTermRequest, GlossaryTerm>().ReverseMap();
 
         }
     }

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateTermRequest, PaginationFilter } from './models/glossary-term-model';
+import { CreateTermRequest, PaginationFilter, UpdateTermRequest } from './models/glossary-term-model';
 import { PaginationReturnObject, TermResponse } from './models/glossary-term-model'; 
 
 @Injectable({
@@ -52,5 +52,8 @@ export class GlossaryTermService {
   }
   createTerm(request: CreateTermRequest): Observable<TermResponse> {
     return this.http.post<TermResponse>(this.baseUrl+"/add", request, { withCredentials: true });
+  }
+  updateTerm(request: UpdateTermRequest): Observable<TermResponse> {
+    return this.http.put<TermResponse>(this.baseUrl, request, { withCredentials: true });
   }
 }

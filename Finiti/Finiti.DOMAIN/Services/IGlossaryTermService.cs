@@ -18,5 +18,6 @@ namespace Finiti.DOMAIN.Services
         Task<GlossaryTerm> Publish(int glossaryTermId);
         Task<GlossaryTerm> Archive(int glossaryTermId);
         Task<GlossaryTerm> Delete(int glossaryTermId);
+        Task<GlossaryTerm> Update(GlossaryTerm glossaryTerm);
     }
 }

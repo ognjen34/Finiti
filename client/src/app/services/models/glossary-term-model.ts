@@ -34,4 +34,9 @@ export interface PaginationFilter {
     term: string;
     definition: string;
   }
+export interface UpdateTermRequest {
+    id: number;
+    term: string;
+    definition: string;
+  }
   

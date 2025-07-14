@@ -25,7 +25,7 @@ namespace Finiti.DATA.Repositories
         }
         public Task<GlossaryTerm> Add(GlossaryTerm glossaryTerm)
         {
-            GlossaryTermEntity existingTerm = _glossaryTerms.FirstOrDefault(gt => gt.Term == glossaryTerm.Term && gt.IsDeleted == false);
+            GlossaryTermEntity existingTerm = _glossaryTerms.FirstOrDefault(gt => gt.Term == glossaryTerm.Term && gt.IsDeleted == false && gt.Status == GlossaryTermStatus.PUBLISHED);
             if (existingTerm != null)
             {
                 throw new TermAlreadyExistsException("Glossary term with this name already exists.");
@@ -170,6 +170,24 @@ namespace Finiti.DATA.Repositories
             PaginationReturnObject<GlossaryTerm> result = new PaginationReturnObject<GlossaryTerm>(_mapper.Map<IEnumerable<GlossaryTerm>>(glossaryTerms), page.PageNumber, page.PageSize, totalCount);
 
             return Task.FromResult(result);
+
+        }
+
+        public Task<GlossaryTerm> Update(GlossaryTerm glossaryTerm)
+        {
+            GlossaryTermEntity glossaryTermEntity = _glossaryTerms.FirstOrDefault(gt => gt.Id == glossaryTerm.Id && gt.IsDeleted == false);
+            if (glossaryTermEntity == null)
+            {
+                throw new ResourceNotFoundException("Glossary term not found with the provided ID.");
+            }
+            if (glossaryTermEntity.Status != GlossaryTermStatus.DRAFT)
+            {
+                throw new TermNotInDraftException("Glossary term must be in draft status to be updated.");
+            }
+            glossaryTermEntity.Term = glossaryTerm.Term;
+            glossaryTermEntity.Definition = glossaryTerm.Definition;
+            _context.SaveChanges();
+            return Task.FromResult(_mapper.Map<GlossaryTerm>(glossaryTermEntity));
 
         }
     }

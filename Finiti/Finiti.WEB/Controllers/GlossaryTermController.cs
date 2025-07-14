@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Finiti.DOMAIN.Model;
 using Finiti.DOMAIN.Services;
+using Finiti.WEB.DTO;
 using Finiti.WEB.DTO.Requests;
 using Finiti.WEB.DTO.Responses;
 using Microsoft.AspNetCore.Authorization;
@@ -83,6 +84,13 @@ namespace Finiti.WEB.Controllers
              return Ok("Forbidden word deleted successfully.");
             
             
+        }
+        [HttpPut("")]
+        public async Task<IActionResult> UpdateTerm([FromBody] UpdateTermRequest request)
+        {
+            GlossaryTerm glossaryTerm = _mapper.Map<GlossaryTerm>(request);
+            GlossaryTerm updatedTerm = await _glossaryTermService.Update(glossaryTerm);
+            return Ok(_mapper.Map<TermResponse>(updatedTerm));
         }
     }
 }

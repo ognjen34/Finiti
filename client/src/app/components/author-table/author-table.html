@@ -42,6 +42,8 @@
             <ng-container *ngIf="element.status === 'DRAFT'">
               <button mat-button color="primary" (click)="onPublish(element)">Publish</button>
               <button mat-button color="warn" (click)="onDelete(element)">Delete</button>
+              <button mat-button color="warn" (click)="onEdit(element)">Edit</button>
+
             </ng-container>
           </td>
         </ng-container>

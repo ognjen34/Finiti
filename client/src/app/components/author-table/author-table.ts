@@ -16,8 +16,10 @@ import {
   PaginationReturnObject,
   PaginationFilter,
   CreateTermRequest,
+  UpdateTermRequest,
 } from '../../services/models/glossary-term-model';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { EditTermDialog } from '../edit-term-dialog/edit-term-dialog';
 
 @Component({
   selector: 'app-author-table',
@@ -128,6 +130,36 @@ export class AuthorTable implements OnInit {
       },
     });
   }
+
+  onEdit(element: TermResponse) {
+  const dialogRef = this.dialog.open(EditTermDialog, {
+    data: {
+      term: element.term,
+      definition: element.definition
+    }
+  });
+
+  dialogRef.afterClosed().subscribe((result: { term: string, definition: string }) => {
+    if (result) {
+      let request: UpdateTermRequest = {
+          id: element.id,
+          term: result.term,
+          definition: result.definition,
+        };
+      this.glossaryTermService.updateTerm(request).subscribe({
+        next: () => {
+          this.snackBar.open('Term updated successfully', 'Close', { duration: 3000 });
+          this.loadData();
+        },
+        error: (err) => {
+          const errorMessage = typeof err.error === 'string' ? err.error : 'Failed to update term';
+          this.snackBar.open(errorMessage, 'Close', { duration: 3000 });
+        }
+      });
+    }
+  });
+}
+
 
   onDelete(element: TermResponse) {
     this.glossaryTermService.delete(element.id.toString()).subscribe({

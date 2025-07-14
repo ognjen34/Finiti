@@ -89,5 +89,11 @@ namespace Finiti.APPLICATION.Services
             PaginationReturnObject<GlossaryTerm> glossaryTerms = _glossaryTermRepository.Search(page).Result;
             return Task.FromResult(glossaryTerms);
         }
+
+        public Task<GlossaryTerm> Update(GlossaryTerm glossaryTerm)
+        {
+            GlossaryTerm updatedTerm = _glossaryTermRepository.Update(glossaryTerm).Result;
+            return Task.FromResult(updatedTerm);
+        }
     }
 }
