@@ -26,9 +26,14 @@ namespace Finiti.APPLICATION.Services
             {
                 throw new TermValidationException("Term contains forbidden words.");
             }
+
             if (!HasEnoughCharacters(term, 30))
             {
                 throw new TermValidationException("Term definition must be at least 30 characters long.");
+            }
+            if (term.Term == "")
+            {
+                throw new TermValidationException("Term cannot be empty.");
             }
             return Task.FromResult(true);
 

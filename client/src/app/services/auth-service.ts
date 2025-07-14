@@ -7,6 +7,13 @@ export interface AuthorLoginRequest {
   password: string;
 }
 
+export interface AuthorRegisterRequest {
+  firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
+}
+
 export interface LoginResponse {
   token: string;
 }
@@ -21,6 +28,9 @@ export class AuthService {
 
   login(request: AuthorLoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.baseUrl + 'login', request,{ withCredentials: true });
+  }
+  register(request: AuthorRegisterRequest): Observable<any> {
+    return this.http.post(this.baseUrl + 'register', request,{ withCredentials: true });
   }
   logout(): Observable<any> {
     return this.http.post(this.baseUrl + 'logout', {}, { observe: 'response', withCredentials: true });

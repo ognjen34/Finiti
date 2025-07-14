@@ -12,7 +12,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
+var settings = ConfigLoader.LoadSettings("../secrets.csv");
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddInMemoryCollection(settings);
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -56,7 +62,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest"))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings["JWT"]))
         };
 
         options.Events = new JwtBearerEvents
@@ -72,7 +78,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
-    options.UseNpgsql("Server=localhost;Port=5432;Database=finiti;User Id=finiti;Password=admin;");
+    options.UseNpgsql(settings["ConnectionString"]);
 }, ServiceLifetime.Scoped);
 
 var app = builder.Build();

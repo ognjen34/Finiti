@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Finiti.DOMAIN.Model;
 using Finiti.DOMAIN.Services;
-using Finiti.WEB.DTO;
 using Finiti.WEB.DTO.Requests;
 using Finiti.WEB.DTO.Responses;
 using Microsoft.AspNetCore.Authorization;
@@ -20,7 +19,7 @@ namespace Finiti.WEB.Controllers
             _glossaryTermService = service;
             _forbiddenWordService = forbiddenWordService;
         }
-
+        [Authorize]
         [HttpPost("add")]
         public async Task<IActionResult> AddTerm([FromBody] CreateTermRequest request)
         {
@@ -32,6 +31,7 @@ namespace Finiti.WEB.Controllers
             return Ok(_mapper.Map<TermResponse>(createdTerm));
 
         }
+        [Authorize]
         [HttpGet("")]
         public async Task<ActionResult> GetAllProjects([FromQuery] PaginationFilter filter)
         {
@@ -51,24 +51,28 @@ namespace Finiti.WEB.Controllers
 
             return Ok(mappedResponse);
         }
+        [Authorize]
         [HttpPut("publish/{id}")]
         public async Task<IActionResult> PublishTerm(int id)
         {
             GlossaryTerm publishedTerm = await _glossaryTermService.Publish(id);
             return Ok(_mapper.Map<TermResponse>(publishedTerm));
         }
+        [Authorize]
         [HttpPut("archive/{id}")]
         public async Task<IActionResult> ArchiveTerm(int id)
         {
             GlossaryTerm archivedTerm = await _glossaryTermService.Archive(id);
             return Ok(_mapper.Map<TermResponse>(archivedTerm));
         }
+        [Authorize]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteTerm(int id)
         {
             GlossaryTerm deletedTerm = await _glossaryTermService.Delete(id);
             return Ok(_mapper.Map<TermResponse>(deletedTerm));
         }
+        [Authorize]
         [HttpPost("forbiddenWord")]
         public async Task<IActionResult> AddForbiddenWord([FromBody] ForbiddenWordRequest request)
         {
@@ -77,6 +81,7 @@ namespace Finiti.WEB.Controllers
             return Ok("Forbidden word added successfully.");
 
         }
+        [Authorize]
         [HttpDelete("forbiddenWord/{word}")]
         public async Task<IActionResult> DeleteForbiddenWord(string word)
         {
@@ -85,6 +90,7 @@ namespace Finiti.WEB.Controllers
             
             
         }
+        [Authorize]
         [HttpPut("")]
         public async Task<IActionResult> UpdateTerm([FromBody] UpdateTermRequest request)
         {

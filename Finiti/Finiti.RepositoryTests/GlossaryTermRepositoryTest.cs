@@ -67,7 +67,7 @@ namespace Finiti.RepositoryTests
             return author;
         }
 
-        private GlossaryTerm GenerateTerm(int authorId, string term = "TestTerm")
+        private GlossaryTerm GenerateTerm(int authorId, string term = "TestTerm",GlossaryTermStatus status = GlossaryTermStatus.DRAFT)
         {
             return new GlossaryTerm
             {
@@ -98,7 +98,10 @@ namespace Finiti.RepositoryTests
             var author = SeedAuthor();
             var term = GenerateTerm(author.Id);
 
-            await _repository.Add(term);
+            term = await _repository.Add(term);
+            await _repository.Publish(term.Id);
+
+
 
             Assert.ThrowsException<TermAlreadyExistsException>(() =>
                 _repository.Add(term).GetAwaiter().GetResult());
@@ -197,9 +200,19 @@ namespace Finiti.RepositoryTests
         public async Task Search_FiltersByTermAndAuthor()
         {
             var author = SeedAuthor();
-            await _repository.Add(GenerateTerm(author.Id, "Networking"));
-            await _repository.Add(GenerateTerm(author.Id, "C#"));
-            await _repository.Add(GenerateTerm(author.Id, "Security"));
+
+            GlossaryTerm term1 = GenerateTerm(author.Id, "C#");
+            GlossaryTerm term2 = GenerateTerm(author.Id, "JavaScript");
+            GlossaryTerm term3 = GenerateTerm(author.Id, "Python");
+            term1 = await _repository.Add(term1);
+            term2 = await _repository.Add(term2);
+            term3 = await _repository.Add(term3);
+            await _repository.Publish(term1.Id);
+            await _repository.Publish(term2.Id);
+            await _repository.Publish(term3.Id);
+            
+
+            
 
             var filter = new PaginationFilter
             {

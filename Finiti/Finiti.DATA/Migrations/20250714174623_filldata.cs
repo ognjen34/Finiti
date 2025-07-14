@@ -10,21 +10,23 @@ namespace Finiti.DATA.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+
+            string password = BCrypt.Net.BCrypt.HashPassword("test");
             migrationBuilder.InsertData(
             table: "Authors",
             columns: new[] { "Id", "FirstName", "LastName", "Username", "Password", "RoleId" },
             values: new object[,]
             {
-                { 0, "John", "Doe", "john.doe", "password1", 0 },
-                { 1, "Jane", "Smith", "jane.smith", "password2", 0 },
-                { 2, "Alice", "Johnson", "alice.j", "password3", 0 },
-                { 3, "Bob", "Brown", "bob.brown", "password4", 0 },
-                { 4, "Charlie", "Davis", "charlie.d", "password5", 0 },
-                { 5, "Diana", "Evans", "diana.evans", "password6", 0 },
-                { 6, "Evan", "Foster", "evan.foster", "password7", 0 },
-                { 7, "Fiona", "Green", "fiona.green", "password8", 0 },
-                { 8, "George", "Hill", "george.hill", "password9", 0 },
-                { 9, "Hannah", "Irwin", "hannah.irwin", "password10", 0 }
+                { 0, "John", "Doe", "john.doe", password, 0 },
+                { 1, "Jane", "Smith", "jane.smith", password, 0 },
+                { 2, "Alice", "Johnson", "alice.j", password, 0 },
+                { 3, "Bob", "Brown", "bob.brown", password, 0 },
+                { 4, "Charlie", "Davis", "charlie.d", password, 0 },
+                { 5, "Diana", "Evans", "diana.evans", password, 0 },
+                { 6, "Evan", "Foster", "evan.foster", password, 0 },
+                { 7, "Fiona", "Green", "fiona.green", password, 0 },
+                { 8, "George", "Hill", "george.hill", password, 0 },
+                { 9, "Hannah", "Irwin", "hannah.irwin", password, 0 }
             });
 
             migrationBuilder.InsertData(

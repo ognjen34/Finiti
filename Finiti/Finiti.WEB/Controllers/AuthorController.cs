@@ -16,9 +16,11 @@ namespace Finiti.WEB.Controllers
     public class AuthorController : BaseController
     {
         private IAuthService _authService;
-        public AuthorController(IMapper mapper,IAuthService authService) : base(mapper)
+        private readonly string _jwt;
+        public AuthorController(IMapper mapper,IAuthService authService,IConfiguration config) : base(mapper)
         {
             _authService = authService;
+            _jwt = config["JWT"];
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] AuthorLoginRequest request)
@@ -37,7 +39,7 @@ namespace Finiti.WEB.Controllers
 
             //secret je ovde samo u developmentu
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest"));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwt));
             var credentialsJWT = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(

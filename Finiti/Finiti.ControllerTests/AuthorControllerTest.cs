@@ -6,6 +6,7 @@ using Finiti.WEB.DTO.Requests;
 using Finiti.WEB.DTO.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -32,9 +33,17 @@ namespace Finiti.ControllerTests
                 cfg.CreateMap<CreateAuthorRequest, Author>();
                 cfg.CreateMap<Author, AuthorResponse>();
             });
+            var values = File.ReadLines("../../../../secrets.csv")
+                 .Skip(1)
+                 .Select(line => line.Split(','))
+                 .ToDictionary(x => x[0].Trim(), x => x[1].Trim('"'));
+
+            var cfg = new ConfigurationBuilder()
+                .AddInMemoryCollection(values)
+                .Build();
 
             _mapper = config.CreateMapper();
-            _controller = new AuthorController(_mapper, _authServiceMock.Object);
+            _controller = new AuthorController(_mapper, _authServiceMock.Object,cfg);
             _controller.ControllerContext = new ControllerContext
             {
                 HttpContext = new DefaultHttpContext()

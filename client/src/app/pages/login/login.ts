@@ -20,6 +20,9 @@ import { Router } from '@angular/router';
 })
 export class Login {
 
+
+
+
   loginForm: FormGroup;
 
   constructor(private fb: FormBuilder,private authService: AuthService, private router: Router) {
@@ -27,8 +30,12 @@ export class Login {
       username: ['', [Validators.required,]],
       password: ['', Validators.required],
     });
-    console.log('Component initializaaaaed')
   }
+
+  onRegister() {
+    console.log('Navigating to register page');
+    this.router.navigate(['/register']);
+}
 
 
   onSubmit() {
