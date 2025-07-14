@@ -8,7 +8,7 @@ import { PaginationReturnObject, TermResponse } from './models/glossary-term-mod
   providedIn: 'root',
 })
 export class GlossaryTermService {
-  private baseUrl = 'https://localhost:7035/terms'; // adjust your API base path
+  private baseUrl = 'https://localhost:7035/terms'; 
 
   constructor(private http: HttpClient) {}
 
