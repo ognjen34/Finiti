@@ -24,6 +24,20 @@ export class GlossaryTermService {
       params = params.set('AuthorQuery', filter.authorQuery);
     }
 
-    return this.http.get<PaginationReturnObject<TermResponse>>(this.baseUrl, { params });
+    return this.http.get<PaginationReturnObject<TermResponse>>(this.baseUrl, { params,withCredentials: true });
+  }
+  getAuthorTerms(filter: PaginationFilter): Observable<PaginationReturnObject<TermResponse>> {
+    let params = new HttpParams()
+      .set('PageNumber', filter.pageNumber.toString())
+      .set('PageSize', filter.pageSize.toString());
+
+    if (filter.termQuery) {
+      params = params.set('TermQuery', filter.termQuery);
+    }
+    if (filter.authorQuery) {
+      params = params.set('AuthorQuery', filter.authorQuery);
+    }
+
+    return this.http.get<PaginationReturnObject<TermResponse>>(this.baseUrl + "/author", { params, withCredentials: true });
   }
 }

@@ -1,3 +1,4 @@
+<div class="table-wrapper">
 <div class="search-filters" style="display: flex; gap: 16px; margin-bottom: 16px;">
     <mat-form-field appearance="outline" style="flex: 1;">
       <mat-label>Search Term</mat-label>
@@ -8,16 +9,13 @@
       <mat-label>Search Author</mat-label>
       <input matInput [(ngModel)]="authorQuery" (ngModelChange)="onFilterChange()" />
     </mat-form-field>
+
+    
   </div>
   
   <div class="table-container">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
     
-      <!-- ID Column -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> ID </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
     
       <!-- Term Column -->
       <ng-container matColumnDef="term">
@@ -48,4 +46,5 @@
       (page)="onPageChange($event)">
     </mat-paginator>
   </div>
+</div>
   

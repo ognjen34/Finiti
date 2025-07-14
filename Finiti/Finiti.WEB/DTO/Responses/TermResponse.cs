@@ -7,5 +7,6 @@
         public string Definition { get; set; }
         public DateTime CreatedAt { get; set; }
         public AuthorResponse Author { get; set; }
+        public string Status { get; set; } 
     }
 }

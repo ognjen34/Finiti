@@ -3,6 +3,7 @@ using Finiti.DOMAIN.Model;
 using Finiti.DOMAIN.Services;
 using Finiti.WEB.DTO.Requests;
 using Finiti.WEB.DTO.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Finiti.WEB.Controllers
@@ -34,6 +35,16 @@ namespace Finiti.WEB.Controllers
         public async Task<ActionResult> GetAllProjects([FromQuery] PaginationFilter filter)
         {
             PaginationReturnObject<GlossaryTerm> response = await _glossaryTermService.Search(filter);
+            PaginationReturnObject<TermResponse> mappedResponse = new PaginationReturnObject<TermResponse>(_mapper.Map<List<TermResponse>>(response.Items), response.Page, response.PageSize, response.TotalItems);
+
+
+            return Ok(mappedResponse);
+        }
+        [Authorize]
+        [HttpGet("author")]
+        public async Task<ActionResult> GetAllAuthorProjects([FromQuery] PaginationFilter filter)
+        {
+            PaginationReturnObject<GlossaryTerm> response = await _glossaryTermService.GetAuthorsTerms(filter,LoggedAuthor.Id);
             PaginationReturnObject<TermResponse> mappedResponse = new PaginationReturnObject<TermResponse>(_mapper.Map<List<TermResponse>>(response.Items), response.Page, response.PageSize, response.TotalItems);
 
 

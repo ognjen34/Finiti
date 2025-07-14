@@ -27,5 +27,6 @@ export interface PaginationFilter {
     definition: string;
     createdAt: string;
     author: AuthorResponse;
+    status: string; 
   }
   

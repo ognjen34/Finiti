@@ -62,13 +62,7 @@ namespace Finiti.DATA.Migrations
             });
 
             // Seed one admin user (you can hash the password if needed)
-            migrationBuilder.InsertData(
-                table: "Authors",
-                columns: new[] { "Id", "FirstName", "LastName", "Username", "Password", "RoleId" },
-                values: new object[]
-                {
-            0, "Admin", "User", "admin", "admin123", 1
-                });
+            
         }
 
 

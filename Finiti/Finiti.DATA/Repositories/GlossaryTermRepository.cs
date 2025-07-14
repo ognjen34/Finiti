@@ -103,6 +103,40 @@ namespace Finiti.DATA.Repositories
             return Task.FromResult(_mapper.Map<GlossaryTerm>(glossaryTermEntity));
 
         }
+        public Task<PaginationReturnObject<GlossaryTerm>> GetAuthorsTerms(PaginationFilter page,int authorId)
+        {
+            IQueryable<GlossaryTermEntity> query = _glossaryTerms;
+
+            query = query.Where(gt => gt.IsDeleted == false);
+
+            query = query.Where(gt => gt.AuthorId == authorId);
+
+            if (!string.IsNullOrEmpty(page.TermQuery))
+            {
+                query = query.Where(gt => gt.Term.ToLower().Contains(page.TermQuery.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(page.AuthorQuery))
+            {
+
+                query = query.Where(gt => gt.Author.FirstName.ToLower().Contains(page.AuthorQuery.ToLower()) || gt.Author.LastName.ToLower().Contains(page.AuthorQuery.ToLower()));
+
+            }
+
+
+            int totalCount = query.Count();
+
+            List<GlossaryTermEntity> glossaryTerms = query
+                 .OrderBy(gt => gt.Term)
+                .Skip((page.PageNumber - 1) * page.PageSize)
+                .Take(page.PageSize)
+                .ToList();
+
+            PaginationReturnObject<GlossaryTerm> result = new PaginationReturnObject<GlossaryTerm>(_mapper.Map<IEnumerable<GlossaryTerm>>(glossaryTerms), page.PageNumber, page.PageSize, totalCount);
+
+            return Task.FromResult(result);
+
+        }
 
         public Task<PaginationReturnObject<GlossaryTerm>> Search(PaginationFilter page)
         {
@@ -114,13 +148,13 @@ namespace Finiti.DATA.Repositories
 
             if (!string.IsNullOrEmpty(page.TermQuery))
             {
-                query = query.Where(gt => gt.Term.Contains(page.TermQuery));
+                query = query.Where(gt => gt.Term.ToLower().Contains(page.TermQuery.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(page.AuthorQuery))
             {
                 
-                    query = query.Where(gt => gt.Author.FirstName.Contains(page.AuthorQuery) || gt.Author.LastName.Contains(page.AuthorQuery));
+                    query = query.Where(gt => gt.Author.FirstName.ToLower().Contains(page.AuthorQuery.ToLower()) || gt.Author.LastName.ToLower().Contains(page.AuthorQuery.ToLower()));
                 
             }
            

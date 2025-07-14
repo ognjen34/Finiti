@@ -50,6 +50,12 @@ namespace Finiti.APPLICATION.Services
 
         }
 
+        public Task<PaginationReturnObject<GlossaryTerm>> GetAuthorsTerms(PaginationFilter page, int authorId)
+        {
+            PaginationReturnObject<GlossaryTerm> glossaryTerms = _glossaryTermRepository.GetAuthorsTerms(page,authorId).Result;
+            return Task.FromResult(glossaryTerms);
+        }
+
         public Task<GlossaryTerm> GetById(int id)
         {
 

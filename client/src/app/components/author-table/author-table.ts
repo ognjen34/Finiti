@@ -13,14 +13,15 @@ import { TermResponse, PaginationReturnObject, PaginationFilter } from '../../se
 
 
 @Component({
-  selector: 'app-table',
+  selector: 'app-author-table',
   standalone: true,
   imports: [CommonModule, MatTableModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
-  templateUrl: './table.html',
-  styleUrls: ['./table.css'],
+  templateUrl: './author-table.html',
+  styleUrls: ['./author-table.css'],
 })
-export class Table implements OnInit {
-  displayedColumns: string[] = ['term', 'definition', 'author'];
+export class AuthorTable implements OnInit {
+  displayedColumns: string[] = ['term', 'definition', 'status', 'actions'];
+
   dataSource: TermResponse[] = [];
 
   pageSize = 10;
@@ -47,6 +48,21 @@ export class Table implements OnInit {
   onAddTerm() {
     console.log('Add term button clicked');
   }
+  onArchive(element: TermResponse) {
+    console.log('Archive clicked for:', element);
+    // Call service to archive term, then reload data or update UI
+  }
+  
+  onPublish(element: TermResponse) {
+    console.log('Publish clicked for:', element);
+    // Call service to publish term, then reload data or update UI
+  }
+  
+  onDelete(element: TermResponse) {
+    console.log('Delete clicked for:', element);
+    // Call service to delete term, then reload data or update UI
+  }
+  
 
   loadData() {
     const filter: PaginationFilter = {
@@ -56,7 +72,7 @@ export class Table implements OnInit {
       authorQuery: this.authorQuery,
     };
 
-    this.glossaryTermService.getTerms(filter).subscribe({
+    this.glossaryTermService.getAuthorTerms(filter).subscribe({
       next: (response: PaginationReturnObject<TermResponse>) => {
         this.dataSource = response.items;
         this.length = response.totalItems;

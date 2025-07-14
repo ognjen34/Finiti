@@ -13,6 +13,8 @@ namespace Finiti.DOMAIN.Services
         Task<GlossaryTerm> GetByName(string name);
         Task<GlossaryTerm> Add(GlossaryTerm glossaryTerm);
         Task<PaginationReturnObject<GlossaryTerm>> Search(PaginationFilter page);
+
+        Task<PaginationReturnObject<GlossaryTerm>> GetAuthorsTerms(PaginationFilter page, int authorId);
         Task<GlossaryTerm> Publish(int glossaryTermId);
         Task<GlossaryTerm> Archive(int glossaryTermId);
         Task<GlossaryTerm> Delete(int glossaryTermId);
