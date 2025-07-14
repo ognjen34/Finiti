@@ -1,8 +1,16 @@
-.table-container {
-    margin: 16px;
+:host .table-container {
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 16px;
+    box-sizing: border-box;
   }
   
-  table {
-    width: 100%;
+  /* Similarly add :host to other selectors */
+  :host .search-filters {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
   }
   

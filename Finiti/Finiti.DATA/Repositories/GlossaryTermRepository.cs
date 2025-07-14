@@ -110,6 +110,8 @@ namespace Finiti.DATA.Repositories
 
             query = query.Where(gt => gt.IsDeleted == false);
 
+            query = query.Where(gt => gt.Status == GlossaryTermStatus.PUBLISHED);
+
             if (!string.IsNullOrEmpty(page.TermQuery))
             {
                 query = query.Where(gt => gt.Term.Contains(page.TermQuery));
