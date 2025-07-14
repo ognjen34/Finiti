@@ -81,6 +81,14 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseNpgsql(settings["ConnectionString"]);
 }, ServiceLifetime.Scoped);
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenLocalhost(7035, listenOptions =>
+    {
+        listenOptions.UseHttps(); 
+    });
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())

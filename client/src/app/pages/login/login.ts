@@ -20,6 +20,22 @@ import { Router } from '@angular/router';
 })
 export class Login {
 
+  ngOnInit() {
+    this.authService.authenticate().subscribe({
+      next: response => {
+        console.log('User authenticated', response.body);
+        this.router.navigate(['/home']);
+
+      },
+      error: err => {
+        if (err.status === 401) {
+        } else {
+          console.error('Authentication check failed', err);
+        }
+      }
+    });
+  }
+
 
 
 
