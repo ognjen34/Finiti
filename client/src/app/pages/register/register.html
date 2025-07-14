@@ -1,0 +1,36 @@
+<div class="login-container">
+  <h1>Register</h1>
+  
+  
+<form [formGroup]="registerForm" class="login-form">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName" type="text" required />
+      
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName" type="text" required />
+      
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" type="text" required />
+      
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" type="password" required />
+      
+    </mat-form-field>
+  
+    <!-- 💡 Here’s the important part -->
+    <button mat-raised-button color="primary" type="button" (click)="onSubmit()">
+      Register
+    </button>
+
+    
+  </form>
+<button mat-button  class = "register-btn" type="button" (click)="onRegister()">Login</button>
+</div>

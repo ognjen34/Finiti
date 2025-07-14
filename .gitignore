@@ -1,0 +1,104 @@
+# ===== .NET / ASP.NET Core =====
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.vspscc
+*.vssscc
+*.dbmdl
+*.pdb
+*.cache/
+*.log
+*.nupkg
+*.snupkg
+*.swp
+*.bak
+*.orig
+*.sdf
+*.sqlite
+*.psess
+*.vsp
+*.pidb
+*.mdb
+
+# .NET Secret Manager & user secrets
+**/secrets.json
+*.user
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Auto-generated files from dotnet watch
+*.refresh
+
+# Entity Framework Migrations snapshot
+Migrations/*Snapshot.cs
+
+# dotCover
+*.dotCover
+
+# Publish output
+publish/
+out/
+
+# Coverage reports
+coverage/
+*.coverage
+*.coveragexml
+
+# Rider IDE
+.idea/
+*.sln.iml
+
+# ===== Visual Studio =====
+.vs/
+.vscode/
+*.csproj.user
+*.suo
+*.user
+*.sln.docstates
+*.VC.db
+
+# IIS Express
+.vsconfig
+.vs/
+
+# ===== VS Code =====
+.vscode/
+.history/
+
+# ===== Angular =====
+node_modules/
+dist/
+tmp/
+temp/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.angular/
+.angular-cache/
+coverage/
+*.tsbuildinfo
+
+# Environment files (optional: ignore if you want to keep them local)
+src/environments/environment*.ts
+
+# ===== OS / Misc =====
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+*.tgz
+*.gz
+*.zip
+
+# ===== NPM lock files (optional: choose one if needed) =====
+# package-lock.json
+# yarn.lock

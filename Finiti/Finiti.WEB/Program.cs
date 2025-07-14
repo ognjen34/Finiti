@@ -1,0 +1,118 @@
+using Finiti.DATA;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
+using Finiti.WEB.Middleware;
+using Finiti.DOMAIN.Repositories;
+using Finiti.DATA.Repositories;
+using Finiti.DOMAIN.Services;
+using Finiti.APPLICATION.Services;
+using Finiti.WEB;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+var settings = ConfigLoader.LoadSettings("../secrets.csv");
+
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddInMemoryCollection(settings);
+
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddAutoMapper(typeof(Program));
+
+
+
+builder.Services.AddScoped<IAuthorRepository,AuthorRepository>();
+builder.Services.AddScoped<IAuthService,AuthService>();
+builder.Services.AddScoped<IGlossaryTermRepository,GlossaryTermRepository>();
+builder.Services.AddScoped<IGlossaryTermService,GlossaryTermService>();
+builder.Services.AddScoped<ITermValidationService,TermValidationService>();
+builder.Services.AddScoped<IForbiddenWordRepository,ForbiddenWordRepository>();
+builder.Services.AddScoped<IForbiddenWordService,ForbiddenWordService>();
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularApp", policy =>
+    {
+        policy.SetIsOriginAllowed(origin =>
+        {
+
+            return true;
+        })
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials();
+    });
+});
+
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings["JWT"]))
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                context.Token = context.Request.Cookies["jwtToken"];
+                return Task.CompletedTask;
+            }
+        };
+    });
+
+
+builder.Services.AddDbContext<DatabaseContext>(options =>
+{
+    options.UseNpgsql(settings["ConnectionString"]);
+}, ServiceLifetime.Scoped);
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenLocalhost(7035, listenOptions =>
+    {
+        listenOptions.UseHttps(); 
+    });
+});
+
+var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+    dbContext.Database.Migrate();  
+}
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+app.UseCors("AllowAngularApp");
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseMiddleware<ClaimsMiddleware>();
+app.MapControllers();
+
+
+app.Run();

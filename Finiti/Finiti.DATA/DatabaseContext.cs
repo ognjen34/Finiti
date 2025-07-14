@@ -1,0 +1,44 @@
+﻿using Finiti.DATA.Model;
+using Finiti.DOMAIN.Model;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Emit;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Finiti.DATA
+{
+    
+        public class DatabaseContext : DbContext
+        {
+            public DbSet<AuthorEntity> Authors { get; set; }
+            public DbSet<RoleEntity> Roles { get; set; }
+            public DbSet<ForbiddenWordEntity> ForbiddenWords { get; set; }
+            public DbSet<GlossaryTermEntity> GlossaryTerms { get; set; }
+
+        
+
+
+        public DatabaseContext(DbContextOptions options) : base(options)
+            {
+
+            }
+
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                base.OnModelCreating(modelBuilder);
+
+               
+
+            }
+
+            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+            {
+                optionsBuilder.UseLazyLoadingProxies();
+
+
+            }
+        }  
+}

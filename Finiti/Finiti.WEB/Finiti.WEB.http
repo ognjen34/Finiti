@@ -1,0 +1,6 @@
+@Finiti.WEB_HostAddress = http://localhost:5007
+
+GET {{Finiti.WEB_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

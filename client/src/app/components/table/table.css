@@ -1,0 +1,39 @@
+.table-wrapper {
+    padding: 16px; 
+    box-sizing: border-box; 
+    position: relative;
+  }
+.add-term-button
+{
+    position : absolute;
+    right: 0;
+    margin: 16px;
+}
+
+:host .search-filters {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 12px; 
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  
+  :host .search-filters mat-form-field {
+    flex: none !important;  
+    width: 180px; 
+    min-width: 120px; 
+    --mat-form-field-padding: 0 8px;
+    font-size: 0.9rem; 
+    height: 40px; 
+  }
+  
+  :host .search-filters mat-form-field .mat-form-field-wrapper {
+    padding-bottom: 0; 
+  }
+  
+  :host .search-filters mat-form-field .mat-input-element {
+    padding: 4px 8px;
+    font-size: 0.9rem;
+    height: 32px; 
+  }
+  
