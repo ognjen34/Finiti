@@ -4,6 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService, AuthorLoginRequest } from '../../services/auth-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ export class Login {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder,private authService: AuthService) {
+  constructor(private fb: FormBuilder,private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required,]],
       password: ['', Validators.required],
@@ -40,6 +41,7 @@ export class Login {
   
     this.authService.login(loginRequest).subscribe({
       next: (response) => {
+        this.router.navigate(['/home']);
         console.log('Login successful:', response);
         
       },
